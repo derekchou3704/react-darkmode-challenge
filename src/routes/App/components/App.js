@@ -1,13 +1,13 @@
 import React from 'react';
 import '../styles/_app.scss';
 import Icon from './Icon'
-import Theme from './Theme'
+import { ThemeProvider } from './Theme'
 
 export const ThemeContext = React.createContext()
 
 const App = () => {
   return (
-    <Theme>
+    <ThemeProvider>
       <div className="app">
         <div className="level">
           <div>
@@ -15,7 +15,7 @@ const App = () => {
           </div>
 
           {/* --The button that should toggle dark mode-- */}
-          <button className="app__dark-mode-btn icon level-right" id="mode">
+          <button className="app__dark-mode-btn icon level-right">
             <Icon />
           </button>
 
@@ -49,7 +49,7 @@ const App = () => {
           </div>
         </section>
       </div>
-    </Theme>
+    </ThemeProvider>
   );
 }
 

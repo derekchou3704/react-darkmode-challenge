@@ -1,34 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 
 const ThemeContext = React.createContext()
-const ThemeUpdate = React.createContext()
+const ThemeUpdateContext = React.createContext()
 
-const Theme = ({ children }) => {
+export function useTheme() {
+    return useContext(ThemeContext)
+}
+
+export function useThemeUpdate() {
+    return useContext(ThemeUpdateContext)
+}
+
+export function ThemeProvider({ children }) {
     const [dark, setDark] = useState(false)
 
-    const onThemeChage = () => {
-        dark 
-        ? setDark(false)
-        : setDark(true)
-    }
+    const toggleTheme = () => {
+        setDark(prev => !prev)
 
-    useEffect(() => {
-        const $darkModeBtn = document.querySelector('#mode')
         const $root = document.querySelector('#root')
-    
-        $darkModeBtn.addEventListener('click', () => {
-          $root.classList.toggle('dark-mode')
-        }, { capture: true })
-        
-      }, [])
+        $root.classList.toggle('dark-mode')
+    }
 
     return (
         <ThemeContext.Provider value={dark}>
-            <ThemeUpdate.Provider value={onThemeChage}>
+            <ThemeUpdateContext.Provider value={toggleTheme}>
                 {children}
-            </ThemeUpdate.Provider>
+            </ThemeUpdateContext.Provider>
         </ThemeContext.Provider>
     )
 }
-
-export default Theme

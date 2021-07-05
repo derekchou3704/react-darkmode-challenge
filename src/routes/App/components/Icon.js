@@ -1,25 +1,25 @@
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { ThemeContext } from './App';
+import { useTheme, useThemeUpdate } from './Theme';
 
-const Icon = () => {
-    const iconBtn = (dark) => {
-        return {
-            icon: dark ? faSun : faMoon ,
-            style: dark ? '#FFA500' : null
-        }
-    } 
+export default function FuncIcon() {
+    const theme = useTheme()
+    const toggleTheme = useThemeUpdate()
+
+    const themeStyles = (dark) => {
+        return { style: dark ? {color: '#FFA500'} : {color: null} }
+    }
+    const themeIcon = (dark) => {
+        return { icon: dark ? faSun : faMoon }
+    }
 
     return (
-        <ThemeContext.Consumer>
-            {dark => 
-                <FontAwesomeIcon 
-                    icon={iconBtn(dark)?.icon} 
-                    style={iconBtn(dark)?.style} 
-                />
-            }
-        </ThemeContext.Consumer>
+        <FontAwesomeIcon 
+            icon={themeIcon(theme)?.icon} 
+            style={themeStyles(theme)?.style}
+            onClick={toggleTheme} 
+        />
     )
 }
 
-export default Icon
